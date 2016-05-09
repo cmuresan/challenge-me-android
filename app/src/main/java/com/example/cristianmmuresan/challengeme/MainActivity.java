@@ -9,7 +9,7 @@ import com.example.cristianmmuresan.challengeme.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_LENGTH = 2500;
+    private static final int SPLASH_DISPLAY_LENGTH = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

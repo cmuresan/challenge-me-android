@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.cristianmmuresan.challengeme.data.User;
 import com.example.cristianmmuresan.challengeme.util.PreferenceUtils;
+import com.firebase.client.Firebase;
 
 /**
  * Created by Cristian M. Muresan on 5/8/2016.
@@ -14,6 +15,13 @@ public class ChallengeMeApplication extends Application {
         super.onCreate();
 
         setGlobals();
+        setupFirebase();
+    }
+
+    private void setupFirebase() {
+        Firebase.setAndroidContext(this);
+
+        Globals.sFirebase = new Firebase("https://challengemeapp.firebaseio.com");
     }
 
     private void setGlobals() {
