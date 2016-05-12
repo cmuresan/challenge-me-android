@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.cristianmmuresan.challengeme.home.HomeActivity;
+import com.example.cristianmmuresan.challengeme.ui.home.HomeActivity;
 import com.example.cristianmmuresan.challengeme.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {

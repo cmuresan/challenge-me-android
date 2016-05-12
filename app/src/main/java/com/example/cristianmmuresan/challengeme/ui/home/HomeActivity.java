@@ -1,4 +1,4 @@
-package com.example.cristianmmuresan.challengeme.home;
+package com.example.cristianmmuresan.challengeme.ui.home;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

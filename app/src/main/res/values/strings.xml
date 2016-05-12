@@ -8,4 +8,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="required_field">This field is required.</string>
     <string name="invalid_email_address">Invalid email address.</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="confirm_password_hint">CONFIRM PASSWORD</string>
+    <string name="passwords_not_matching">Passwords not matching.</string>
 </resources>
