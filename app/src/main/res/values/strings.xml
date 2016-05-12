@@ -6,4 +6,6 @@
     <string name="text_login">LOGIN</string>
     <string name="text_forgot_password">FORGOT PASSWORD</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="required_field">This field is required.</string>
+    <string name="invalid_email_address">Invalid email address.</string>
 </resources>
