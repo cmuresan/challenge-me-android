@@ -6,4 +6,5 @@
     <color name="red">#FF0000</color>
     <color name="dark_gray">#333</color>
     <color name="dark_gray_pressed">#dd333333</color>
+    <color name="grey_background">#dddddd</color>
 </resources>
