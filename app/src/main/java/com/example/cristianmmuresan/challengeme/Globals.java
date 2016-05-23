@@ -5,9 +5,8 @@ import com.example.cristianmmuresan.challengeme.data.User;
 /**
  * Created by Cristian M. Muresan on 5/8/2016.
  */
-public class Globals {
+public final class Globals {
     public static ChallengeMeApplication iApplication;
 
     public static User iUser;
-
 }
