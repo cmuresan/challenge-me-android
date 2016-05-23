@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.btn_register).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
+        findViewById(R.id.btn_forgot_password).setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btn_login:
                 attemptLogin();
+                break;
+            case R.id.btn_forgot_password:
+                startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
     }

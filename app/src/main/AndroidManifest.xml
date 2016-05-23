@@ -31,12 +31,24 @@
             android:name=".ui.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.Splash">
+            android:theme="@style/AppTheme.NoActionBar.Splash"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.record.RecordActivity"
+            android:label="@string/title_activity_record"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.login.ForgotPassword"
+            android:label="@string/title_activity_forgot_password"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

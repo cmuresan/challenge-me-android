@@ -7,16 +7,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.example.cristianmmuresan.challengeme.R;
+import com.example.cristianmmuresan.challengeme.ui.home.fragments.AccountFragment;
+import com.example.cristianmmuresan.challengeme.ui.home.fragments.MyActivitiesFragment;
+import com.example.cristianmmuresan.challengeme.ui.home.fragments.RecordActivityFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final int FRAGMENT_RECORD = 0;
     private static final int FRAGMENT_MY_ACTIVITIES = 1;
+    private static final int FRAGMENT_ACCOUNT = 2;
 
     private TabLayout tabLayoutRules;
     private ViewPager viewPager;
@@ -70,13 +73,15 @@ public class HomeActivity extends AppCompatActivity {
                     return RecordActivityFragment.newInstance();
                 case FRAGMENT_MY_ACTIVITIES:
                     return MyActivitiesFragment.newInstance();
+                case FRAGMENT_ACCOUNT:
+                    return AccountFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -86,6 +91,8 @@ public class HomeActivity extends AppCompatActivity {
                     return getString(R.string.record_activity);
                 case FRAGMENT_MY_ACTIVITIES:
                     return getString(R.string.my_activities_tab);
+                case FRAGMENT_ACCOUNT:
+                    return getString(R.string.account);
             }
             return null;
         }

@@ -9,9 +9,12 @@ public class User {
     private String token;
     private String email;
     private String username;
+    private String firstname;
+    private String lastname;
+    private String bike;
 
 
-    public User(){
+    public User() {
 
     }
 
@@ -19,29 +22,32 @@ public class User {
         this.token = user.getObjectId();
         this.email = user.getEmail();
         this.username = user.getUsername();
+        this.firstname = user.getString("firstname");
+        this.lastname = user.getString("lastname");
+        this.bike = user.getString("bike");
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getBike() {
+        return bike;
     }
 }

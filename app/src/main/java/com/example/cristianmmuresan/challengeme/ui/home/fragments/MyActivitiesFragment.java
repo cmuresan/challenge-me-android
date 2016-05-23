@@ -1,4 +1,4 @@
-package com.example.cristianmmuresan.challengeme.ui.home;
+package com.example.cristianmmuresan.challengeme.ui.home.fragments;
 
 
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 
 import com.example.cristianmmuresan.challengeme.R;
 import com.example.cristianmmuresan.challengeme.data.Activity;
+import com.example.cristianmmuresan.challengeme.ui.home.ActivitiesAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyActivitiesFragment extends Fragment {
 
