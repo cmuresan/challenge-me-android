@@ -22,4 +22,11 @@
         android:textSize="@dimen/text_size_medium"
         android:text="@string/activity_time"/>
 
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent" />
+
 </RelativeLayout>

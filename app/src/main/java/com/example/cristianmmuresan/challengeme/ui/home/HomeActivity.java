@@ -1,7 +1,10 @@
 package com.example.cristianmmuresan.challengeme.ui.home;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -20,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int FRAGMENT_RECORD = 0;
     private static final int FRAGMENT_MY_ACTIVITIES = 1;
     private static final int FRAGMENT_ACCOUNT = 2;
+    private static final int INTERNET_REQUEST = 200;
 
     private TabLayout tabLayoutRules;
     private ViewPager viewPager;
@@ -40,6 +44,15 @@ public class HomeActivity extends AppCompatActivity {
 
         //Set Typeface
         setTypeface();
+
+        checkInternetPermission();
+    }
+
+    private void checkInternetPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_REQUEST);
+        }
     }
 
     private void setTypeface() {

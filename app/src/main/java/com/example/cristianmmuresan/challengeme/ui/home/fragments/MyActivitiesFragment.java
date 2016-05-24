@@ -8,17 +8,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.cristianmmuresan.challengeme.Globals;
 import com.example.cristianmmuresan.challengeme.R;
 import com.example.cristianmmuresan.challengeme.data.Activity;
 import com.example.cristianmmuresan.challengeme.ui.home.ActivitiesAdapter;
+import com.example.cristianmmuresan.challengeme.util.ProgressDialogUtil;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyActivitiesFragment extends Fragment {
 
     private RecyclerView recyclerViewRules;
     private View fragmentView;
+    private ActivitiesAdapter mRulesAdapter;
+    private ProgressDialogUtil mProgressDialogUtil;
 
     public MyActivitiesFragment() {
         // Required empty public constructor
@@ -49,15 +59,40 @@ public class MyActivitiesFragment extends Fragment {
         setupRecyclerView(view);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivities();
+    }
+
     private void setupRecyclerView(View view) {
         recyclerViewRules = (RecyclerView) view.findViewById(R.id.recycler_view_rules);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewRules.setLayoutManager(linearLayoutManager);
-        ActivitiesAdapter rulesAdapter = new ActivitiesAdapter(getActivity(), getRules());
-        recyclerViewRules.setAdapter(rulesAdapter);
+        mRulesAdapter = new ActivitiesAdapter(getActivity());
+        recyclerViewRules.setAdapter(mRulesAdapter);
     }
 
-    private ArrayList<Activity> getRules() {
-        return new ArrayList<>();
+    private void getActivities() {
+        mProgressDialogUtil = new ProgressDialogUtil(getActivity());
+        mProgressDialogUtil.show();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Activity");
+        query.whereEqualTo("user", Globals.iUser.getEmail());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                mProgressDialogUtil.dismiss();
+                if(e==null){
+                    List<Activity> activities = new ArrayList<>();
+                    for(ParseObject po : list){
+                        Activity act = new Activity(po);
+                        activities.add(act);
+                    }
+                    mRulesAdapter.setActivities(activities);
+                }else{
+                    Toast.makeText(getActivity(), "There was a problem fetching the data.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

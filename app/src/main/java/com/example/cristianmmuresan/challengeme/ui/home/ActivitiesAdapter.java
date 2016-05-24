@@ -21,9 +21,14 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
     private ArrayList<Activity> mActivities;
     private Context mContext;
 
-    public ActivitiesAdapter(Context context, List<Activity> activities){
+    public ActivitiesAdapter(Context context){
         mContext = context;
-        mActivities = new ArrayList<Activity>(activities);
+
+    }
+
+    public void setActivities(List<Activity> activities){
+        mActivities = new ArrayList<>(activities);
+        notifyDataSetChanged();
     }
     
     @Override
@@ -40,7 +45,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mActivities == null ? 0 : mActivities.size();
     }
 
     public class ActivitiesViewHolder extends RecyclerView.ViewHolder{
