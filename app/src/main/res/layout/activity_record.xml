@@ -17,4 +17,29 @@
         app:title="@string/record_activity"
         app:titleTextColor="@color/colorAccent"/>
 
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/timer_size"
+        android:layout_below="@id/toolbar"/>
+
+    <fragment android:id="@+id/map"
+              android:layout_width="match_parent"
+              android:layout_height="fill_parent"
+              android:layout_below="@id/timer"
+              android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <TextView
+        android:id="@+id/stop_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_register"
+        android:padding="@dimen/activity_half_vertical_margin"
+        android:text="@string/stop_text"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
