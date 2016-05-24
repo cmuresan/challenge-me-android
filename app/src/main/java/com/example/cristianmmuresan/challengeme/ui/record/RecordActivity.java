@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Handler;
@@ -31,14 +30,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
 import com.parse.ParseObject;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class RecordActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -69,6 +64,7 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     private long stopTime = 0L;
     private Handler customHandler = new Handler();
     private String mActivityTitle;
+    private String mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,14 +164,13 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void getFinalWaypoints() {
-        if(mAllWaypoints.size()>6) {
+        if (mAllWaypoints.size() > 6) {
             int nth = mAllWaypoints.size() / 6;
             for (int i = 0; i < mAllWaypoints.size(); i++) {
                 if (i % nth == 0 && i > 0)
                     mWaypoints.add(mAllWaypoints.get(i));
             }
-        }
-        else
+        } else
             mWaypoints.addAll(mAllWaypoints);
         mAllWaypoints.clear();
     }
@@ -256,11 +251,14 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void saveActivity() {
-        ParseObject activity  = new ParseObject("Activity");
+        ParseObject activity = new ParseObject("Activity");
         activity.put("user", Globals.iUser.getEmail());
-        if(mActivityTitle != null)
-            activity.put("title",mActivityTitle);
+        if (mActivityTitle != null)
+            activity.put("title", mActivityTitle);
         activity.put("time", Activity.getActivityTime(stopTime));
+        activity.put("url", mUrl);
+        activity.put("dest", new Gson().toJson(mDest));
+        activity.put("origin", new Gson().toJson(mOrigin));
         activity.saveInBackground();
 
         Toast.makeText(RecordActivity.this, "Activity successfully saved!", Toast.LENGTH_SHORT).show();
@@ -296,9 +294,9 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
     }
 
     private void computePath() {
-        String url = getMapsApiDirectionsUrl();
-        ReadTask downloadTask = new ReadTask();
-        downloadTask.execute(url);
+        mUrl = getMapsApiDirectionsUrl();
+        ReadTask downloadTask = new ReadTask(this, googleMap);
+        downloadTask.execute(mUrl);
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDest, 15));
         addMarkers();
@@ -310,80 +308,11 @@ public class RecordActivity extends AppCompatActivity implements GoogleApiClient
         if (mGoogleApiClient.isConnected()) {
             Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-            return latLng;
+            if (location != null)
+                return new LatLng(location.getLatitude(), location.getLongitude());
+            else
+                return new LatLng(0, 0);
         } else return new LatLng(0, 0);
-    }
-
-    private class ReadTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... url) {
-            String data = "";
-            try {
-                HttpConnection http = new HttpConnection();
-                data = http.readUrl(url[0]);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            new ParserTask().execute(result);
-        }
-    }
-
-    private class ParserTask extends
-            AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(
-                String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                PathJSONParser parser = new PathJSONParser();
-                routes = parser.parse(jObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
-            ArrayList<LatLng> points = null;
-            PolylineOptions polyLineOptions = null;
-
-            // traversing through routes
-            for (int i = 0; i < routes.size(); i++) {
-                points = new ArrayList<LatLng>();
-                polyLineOptions = new PolylineOptions();
-                List<HashMap<String, String>> path = routes.get(i);
-
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap<String, String> point = path.get(j);
-
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
-
-                    points.add(position);
-                }
-
-                polyLineOptions.addAll(points);
-                polyLineOptions.width(4);
-                polyLineOptions.color(getResources().getColor(R.color.colorAccent));
-            }
-
-            googleMap.addPolyline(polyLineOptions);
-        }
     }
 
 }

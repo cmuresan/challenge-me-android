@@ -32,7 +32,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private TextInputLayout lastnameView;
     private TextInputLayout bikeView;
     private String mEmail;
-    private String mUsername;
     private String mFirstname;
     private String mLastname;
     private String mBike;
@@ -65,7 +64,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btn_save_user).setOnClickListener(this);
 
         emailView = (TextInputLayout) view.findViewById(R.id.emailInputLayout);
-        usernameView = (TextInputLayout) view.findViewById(R.id.usernameInputLayout);
         firstnameView = (TextInputLayout) view.findViewById(R.id.firstnameInputLayout);
         lastnameView = (TextInputLayout) view.findViewById(R.id.lastnameInputLayout);
         bikeView = (TextInputLayout) view.findViewById(R.id.bikeInputLayout);
@@ -91,7 +89,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         emailView.setError(null);
 
         mEmail = emailView.getEditText().getText().toString();
-        mUsername = usernameView.getEditText().getText().toString();
         mFirstname = firstnameView.getEditText().getText().toString();
         mLastname = lastnameView.getEditText().getText().toString();
         mBike = bikeView.getEditText().getText().toString();
@@ -112,7 +109,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             public void done(ParseUser parseUser, ParseException e) {
                 if (e == null) {
                     parseUser.setEmail(mEmail);
-                    parseUser.setUsername(mUsername);
                     parseUser.put("firstname", mFirstname);
                     parseUser.put("lastname", mLastname);
                     parseUser.put("bike", mBike);
@@ -152,8 +148,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         if (Globals.iUser != null && Globals.iUser.getEmail() != null) {
             if (!TextUtils.isEmpty(Globals.iUser.getEmail()))
                 emailView.getEditText().setText(Globals.iUser.getEmail());
-            if (!TextUtils.isEmpty(Globals.iUser.getUsername()))
-                usernameView.getEditText().setText(Globals.iUser.getUsername());
             if (!TextUtils.isEmpty(Globals.iUser.getFirstname()))
                 firstnameView.getEditText().setText(Globals.iUser.getFirstname());
             if (!TextUtils.isEmpty(Globals.iUser.getLastname()))

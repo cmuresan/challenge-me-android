@@ -8,7 +8,6 @@ import com.parse.ParseUser;
 public class User {
     private String token;
     private String email;
-    private String username;
     private String firstname;
     private String lastname;
     private String bike;
@@ -21,7 +20,6 @@ public class User {
     public User(ParseUser user) {
         this.token = user.getObjectId();
         this.email = user.getEmail();
-        this.username = user.getUsername();
         this.firstname = user.getString("firstname");
         this.lastname = user.getString("lastname");
         this.bike = user.getString("bike");
@@ -33,10 +31,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getFirstname() {
