@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.cristianmmuresan.challengeme.R;
 import com.example.cristianmmuresan.challengeme.ui.record.RecordActivity;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 public class RecordActivityFragment extends Fragment implements View.OnClickListener {
     public RecordActivityFragment() {
@@ -45,6 +47,7 @@ public class RecordActivityFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.record_activity_image:
+
                 startActivity(new Intent(getActivity(), RecordActivity.class));
                 break;
         }

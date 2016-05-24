@@ -21,6 +21,8 @@
         android:id="@+id/timer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/timer_size"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_xxxlarge"
         android:layout_below="@id/toolbar"/>
 
     <fragment android:id="@+id/map"
